@@ -1,0 +1,740 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Apoorv & Anugya — 14 Months of Magic</title>
+<link href="https://fonts.googleapis.com/css2?family=Pacifico&family=Nunito:wght@400;600;700&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --pink: #FF6B9D;
+    --yellow: #FFD93D;
+    --green: #6BCB77;
+    --blue: #4D96FF;
+    --purple: #9B59B6;
+    --peach: #FFDAB9;
+  }
+
+  body {
+    font-family: 'Nunito', sans-serif;
+    background: #fffaf5;
+    min-height: 100vh;
+    overflow-x: hidden;
+  }
+
+  /* ── HERO ── */
+  .hero {
+    text-align: center;
+    padding: 60px 20px 40px;
+    position: relative;
+    background: linear-gradient(160deg, #fff5fa 0%, #fffbea 50%, #f0f8ff 100%);
+    overflow: hidden;
+  }
+
+  .hero::before {
+    content: '';
+    position: absolute; inset: 0;
+    background-image:
+      radial-gradient(circle at 20% 20%, #FF6B9D22 0%, transparent 50%),
+      radial-gradient(circle at 80% 80%, #4D96FF22 0%, transparent 50%),
+      radial-gradient(circle at 60% 10%, #FFD93D22 0%, transparent 40%);
+  }
+
+  .hero-title {
+    font-family: 'Pacifico', cursive;
+    font-size: clamp(32px, 6vw, 52px);
+    background: linear-gradient(135deg, #FF6B9D, #FFD93D, #4D96FF);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    position: relative;
+    line-height: 1.2;
+  }
+
+  .hero-sub {
+    font-size: 15px;
+    color: #888;
+    margin-top: 8px;
+    position: relative;
+    letter-spacing: 1px;
+  }
+
+  .hero-months {
+    display: inline-block;
+    margin-top: 18px;
+    background: linear-gradient(135deg, #FF6B9D, #FF8E53);
+    color: white;
+    font-size: 13px;
+    font-weight: 700;
+    padding: 6px 20px;
+    border-radius: 30px;
+    letter-spacing: 1px;
+    position: relative;
+  }
+
+  .floating-dots {
+    display: flex;
+    justify-content: center;
+    gap: 8px;
+    margin-top: 20px;
+    position: relative;
+  }
+
+  .fdot {
+    width: 10px; height: 10px;
+    border-radius: 50%;
+    animation: fdotBounce 1.4s ease-in-out infinite;
+  }
+  .fdot:nth-child(1){background:#FF6B9D;animation-delay:0s;}
+  .fdot:nth-child(2){background:#FFD93D;animation-delay:.15s;}
+  .fdot:nth-child(3){background:#6BCB77;animation-delay:.3s;}
+  .fdot:nth-child(4){background:#4D96FF;animation-delay:.45s;}
+  .fdot:nth-child(5){background:#FF6B9D;animation-delay:.6s;}
+  @keyframes fdotBounce {
+    0%,100%{transform:translateY(0);}
+    50%{transform:translateY(-8px);}
+  }
+
+  /* ── CONFETTI PARTICLES ── */
+  .confetti-wrap {
+    position: fixed; inset: 0; pointer-events: none; z-index: 0; overflow: hidden;
+  }
+  .cp {
+    position: absolute;
+    width: 8px; height: 8px;
+    border-radius: 2px;
+    animation: fall linear infinite;
+    opacity: 0.7;
+  }
+  @keyframes fall {
+    0%{transform:translateY(-20px) rotate(0deg);opacity:.8;}
+    100%{transform:translateY(110vh) rotate(720deg);opacity:0;}
+  }
+
+  /* ── TIMELINE ── */
+  .timeline-wrap {
+    max-width: 900px;
+    margin: 0 auto;
+    padding: 20px 16px 60px;
+    position: relative;
+    z-index: 1;
+  }
+
+  .timeline-line {
+    position: absolute;
+    left: 50%;
+    top: 0; bottom: 0;
+    width: 4px;
+    transform: translateX(-50%);
+    background: linear-gradient(to bottom,
+      #FF6B9D, #FFD93D, #6BCB77, #4D96FF,
+      #FF6B9D, #FFD93D, #6BCB77, #4D96FF,
+      #FF6B9D, #FFD93D);
+    border-radius: 4px;
+  }
+
+  /* ── EVENT CARD ── */
+  .event {
+    display: flex;
+    align-items: flex-start;
+    gap: 0;
+    margin-bottom: 40px;
+    position: relative;
+    opacity: 0;
+    transform: translateY(40px);
+    transition: opacity 0.7s ease, transform 0.7s ease;
+  }
+  .event.visible { opacity: 1; transform: translateY(0); }
+
+  .event-left, .event-right { width: 44%; }
+  .event-mid {
+    width: 12%;
+    display: flex;
+    justify-content: center;
+    padding-top: 16px;
+    flex-shrink: 0;
+  }
+
+  .event-node {
+    width: 22px; height: 22px;
+    border-radius: 50%;
+    border: 4px solid #fffaf5;
+    flex-shrink: 0;
+    position: relative;
+    z-index: 2;
+    animation: nodePulse 2s ease-in-out infinite;
+  }
+  @keyframes nodePulse {
+    0%,100%{transform:scale(1);box-shadow:0 0 0 0 rgba(0,0,0,.15);}
+    50%{transform:scale(1.15);box-shadow:0 0 0 6px rgba(0,0,0,.0);}
+  }
+
+  .card {
+    background: #fff;
+    border-radius: 20px;
+    padding: 0;
+    overflow: hidden;
+    box-shadow: 0 4px 20px rgba(0,0,0,.08);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    border: 1.5px solid #f0e8ff;
+  }
+  .card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 10px 30px rgba(0,0,0,.12);
+  }
+
+  .card-scene {
+    width: 100%;
+    display: block;
+    border-bottom: 1.5px solid #f5f0ff;
+  }
+
+  .card-body {
+    padding: 12px 14px 14px;
+  }
+
+  .card-date {
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 1.2px;
+    text-transform: uppercase;
+    color: #bbb;
+    margin-bottom: 3px;
+  }
+
+  .card-title {
+    font-size: 14px;
+    font-weight: 700;
+    color: #333;
+    margin-bottom: 5px;
+    line-height: 1.3;
+  }
+
+  .card-desc {
+    font-size: 12px;
+    color: #777;
+    line-height: 1.5;
+    margin-bottom: 7px;
+  }
+
+  .card-special {
+    display: inline-block;
+    font-size: 11px;
+    font-weight: 700;
+    padding: 3px 10px;
+    border-radius: 20px;
+  }
+
+  .event-left  { padding-right: 10px; }
+  .event-right { padding-left: 10px; }
+
+  /* ── FINAL BANNER ── */
+  .final-banner {
+    text-align: center;
+    padding: 40px 20px;
+    background: linear-gradient(135deg, #fff5fa, #fffbea, #f0f8ff);
+    border-radius: 24px;
+    margin: 20px 16px;
+    position: relative;
+    overflow: hidden;
+    border: 2px dashed #FFD93D;
+  }
+  .final-banner h2 {
+    font-family: 'Pacifico', cursive;
+    font-size: clamp(22px, 5vw, 38px);
+    background: linear-gradient(135deg, #FF6B9D, #FFD93D);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+  .final-banner p {
+    font-size: 15px;
+    color: #888;
+    margin-top: 10px;
+  }
+
+  /* ── MOBILE ── */
+  @media (max-width: 580px) {
+    .timeline-line { left: 18px; }
+    .event, .event:nth-child(even) {
+      flex-direction: column !important;
+      padding-left: 48px;
+    }
+    .event-left, .event-right { width: 100% !important; padding: 0 !important; order: 2 !important; }
+    .event-mid { position: absolute; left: 4px; top: 12px; width: auto; order: 1 !important; }
+    .event { position: relative; }
+  }
+</style>
+</head>
+<body>
+
+<div class="confetti-wrap" id="confetti"></div>
+
+<!-- HERO -->
+<div class="hero">
+  <div class="hero-title">Apoorv & Anugya</div>
+  <div class="hero-sub">A love story in doodles ✦</div>
+  <div class="hero-months">14 MONTHS OF MAGIC</div>
+  <div class="floating-dots">
+    <div class="fdot"></div><div class="fdot"></div><div class="fdot"></div>
+    <div class="fdot"></div><div class="fdot"></div>
+  </div>
+</div>
+
+<!-- TIMELINE -->
+<div class="timeline-wrap">
+  <div class="timeline-line"></div>
+  <div id="events-container"></div>
+</div>
+
+<!-- FINAL -->
+<div class="final-banner">
+  <h2>Here's to forever 💕</h2>
+  <p>Apoorv & Anugya — January 2025 to always</p>
+</div>
+
+<script>
+const events = [
+  {
+    date:"Jan 24, 2025", title:"First Date 🌙",
+    desc:"Late night dinner in the car. Stars, moon… and a first kiss.",
+    special:"He forgot the flowers 😅", color:"#FF6B9D",
+    scene: `<svg width="100%" viewBox="0 0 300 160" xmlns="http://www.w3.org/2000/svg">
+      <rect width="300" height="160" fill="#12103a"/>
+      <circle cx="265" cy="22" r="14" fill="#ffe566"/>
+      <circle cx="271" cy="17" r="11" fill="#12103a"/>
+      ${[[25,12],[55,8],[90,15],[130,6],[175,18],[210,9],[248,14],[15,35],[80,28],[155,22],[230,30]].map(([x,y])=>`<circle cx="${x}" cy="${y}" r="1.8" fill="#ffe566"/>`).join('')}
+      <rect x="30" y="90" width="180" height="40" fill="#2a2870" rx="10"/>
+      <rect x="55" y="73" width="130" height="30" fill="#35348a" rx="8"/>
+      <rect x="60" y="76" width="52" height="22" fill="#87CEEB" rx="4"/>
+      <rect x="123" y="76" width="52" height="22" fill="#87CEEB" rx="4"/>
+      <circle cx="70" cy="132" r="14" fill="#111"/><circle cx="70" cy="132" r="7" fill="#444"/>
+      <circle cx="170" cy="132" r="14" fill="#111"/><circle cx="170" cy="132" r="7" fill="#444"/>
+      <circle cx="110" cy="85" r="5" fill="#FF6B9D"/>
+      <circle cx="125" cy="78" r="4" fill="#FF6B9D" opacity=".7"/>
+      <circle cx="140" cy="83" r="3" fill="#FF6B9D" opacity=".5"/>
+      <text x="12" y="155" font-size="11" fill="#FF6B9D" font-family="Nunito,sans-serif">no flowers... oops</text>
+    </svg>`
+  },
+  {
+    date:"Jan 25, 2025", title:"First Day Out ☀️",
+    desc:"Social Café date. Flowers redeemed! Lost the car for an hour.",
+    special:"Found the car eventually 😂", color:"#FFD93D",
+    scene:`<svg width="100%" viewBox="0 0 300 160" xmlns="http://www.w3.org/2000/svg">
+      <rect width="300" height="160" fill="#fffbe6"/>
+      <rect x="18" y="35" width="95" height="100" fill="#c87840" rx="8"/>
+      <rect x="28" y="55" width="28" height="22" fill="#87CEEB" rx="3"/>
+      <rect x="62" y="55" width="28" height="22" fill="#87CEEB" rx="3"/>
+      <rect x="38" y="95" width="55" height="40" fill="#a05a28"/>
+      <rect x="0" y="33" width="133" height="10" fill="#e8a050"/>
+      <text x="25" y="30" font-size="10" fill="#c87840" font-family="Nunito,sans-serif" font-weight="700">SOCIAL CAFÉ</text>
+      <circle cx="175" cy="65" r="16" fill="#FFDAB9"/>
+      <rect x="163" y="81" width="24" height="32" fill="#4D96FF" rx="5"/>
+      <text x="185" y="72" font-size="22" font-family="serif">🌸</text>
+      <circle cx="240" cy="100" r="14" fill="#FFDAB9"/>
+      <rect x="228" y="114" width="24" height="28" fill="#FF6B9D" rx="5"/>
+      <text x="225" y="95" font-size="18" fill="#FFD93D" font-family="serif">?</text>
+      <text x="248" y="90" font-size="14" fill="#FF6B9D" font-family="serif">?</text>
+      <text x="155" y="155" font-size="11" fill="#c8a000" font-family="Nunito,sans-serif">where is the car?!</text>
+    </svg>`
+  },
+  {
+    date:"Jan 26, 2025", title:"Blessing Day 🙏",
+    desc:"Bangla Sahib Gurdwara, street food at CP. A feeling that felt right.",
+    special:"Something magical happened here", color:"#FFD700",
+    scene:`<svg width="100%" viewBox="0 0 300 160" xmlns="http://www.w3.org/2000/svg">
+      <rect width="300" height="160" fill="#fffadd"/>
+      <rect x="80" y="80" width="140" height="75" fill="#e8b800"/>
+      <ellipse cx="150" cy="68" rx="45" ry="55" fill="#FFD700"/>
+      <ellipse cx="150" cy="68" rx="35" ry="44" fill="#ffd000"/>
+      <rect x="110" y="60" width="80" height="30" fill="#fffadd" rx="4"/>
+      <text x="125" y="82" font-size="20" font-family="serif">☬</text>
+      ${Array.from({length:8},(_,i)=>{const a=i*45*Math.PI/180,x=150+70*Math.cos(a),y=68+55*Math.sin(a);return `<line x1="150" y1="68" x2="${x}" y2="${y}" stroke="#FFD70066" stroke-width="2"/>`;}).join('')}
+      <circle cx="98" cy="120" r="11" fill="#FFDAB9"/><rect x="88" y="131" width="20" height="24" fill="#FF6B9D" rx="4"/>
+      <circle cx="202" cy="120" r="11" fill="#FFDAB9"/><rect x="192" y="131" width="20" height="24" fill="#4D96FF" rx="4"/>
+      <line x1="109" y1="143" x2="192" y2="143" stroke="#FF6B9D" stroke-width="2.5" stroke-dasharray="4,3"/>
+      <text x="10" y="90" font-size="14" font-family="serif">🍢</text><text x="30" y="95" font-size="14" font-family="serif">🫙</text>
+      <text x="255" y="90" font-size="14" font-family="serif">🥗</text>
+      <text x="95" y="157" font-size="11" fill="#c8a000" font-family="Nunito,sans-serif">the energy was unreal</text>
+    </svg>`
+  },
+  {
+    date:"Feb 8, 2025", title:"First Night – Himachal 🏔️",
+    desc:"Alt Life stay, snow-capped mountains, candles, and unforgettable Tiramisu.",
+    special:"Tiramisu is sacred now 🍮", color:"#378ADD",
+    scene:`<svg width="100%" viewBox="0 0 300 160" xmlns="http://www.w3.org/2000/svg">
+      <rect width="300" height="160" fill="#0a1628"/>
+      ${[[22,12],[52,8],[88,15],[125,6],[170,18],[205,9],[245,14],[15,35],[75,25],[150,20],[225,30]].map(([x,y])=>`<circle cx="${x}" cy="${y}" r="1.8" fill="#ffe566"/>`).join('')}
+      <polygon points="0,100 60,45 120,80 175,28 240,70 300,50 300,160 0,160" fill="#1a3060"/>
+      <polygon points="0,100 60,45 90,65" fill="#243d75"/>
+      <polygon points="45,50 60,45 75,50" fill="#d8e8ff"/>
+      <polygon points="160,33 175,28 190,33" fill="#d8e8ff"/>
+      <rect x="88" y="88" width="124" height="65" fill="#6B3A1F" rx="4"/>
+      <polygon points="78,88 150,62 222,88" fill="#8B4513"/>
+      <rect x="100" y="98" width="28" height="22" fill="#FFD93D" rx="3"/>
+      <rect x="148" y="98" width="28" height="22" fill="#FFD93D" rx="3"/>
+      <rect x="138" y="104" width="10" height="16" fill="#fff" rx="2"/>
+      <ellipse cx="143" cy="102" rx="6" ry="5" fill="#FFD93D"/>
+      <text x="90" y="155" font-size="12" fill="#FFD93D" font-family="Nunito,sans-serif" font-weight="700">🍮 Tiramisu moment</text>
+    </svg>`
+  },
+  {
+    date:"Feb 9, 2025", title:"Meeting Her Friends 👯",
+    desc:"Friend group unlocked instantly. So much laughter!",
+    special:"Instant hit with everyone", color:"#6BCB77",
+    scene:`<svg width="100%" viewBox="0 0 300 160" xmlns="http://www.w3.org/2000/svg">
+      <rect width="300" height="160" fill="#f0fff4"/>
+      <ellipse cx="150" cy="110" rx="110" ry="22" fill="#d4a870"/>
+      ${[[28,55,'#FF6B9D'],[75,45,'#FFD93D'],[122,40,'#FFDAB9'],[170,45,'#4D96FF'],[218,55,'#6BCB77']].map(([x,y,c])=>`
+        <circle cx="${x}" cy="${y}" r="15" fill="${c}"/>
+        <rect x="${x-11}" y="${y+15}" width="22" height="28" fill="${c}" rx="5"/>
+      `).join('')}
+      ${[[45,90,'#FF6B9D'],[85,88,'#FFD93D'],[120,85,'#4D96FF'],[162,88,'#6BCB77'],[205,90,'#FF6B9D']].map(([x,y,c])=>`
+        <rect x="${x-7}" y="${y}" width="14" height="22" fill="${c}" rx="3"/>
+        <rect x="${x-9}" y="${y-5}" width="18" height="8" fill="${c}" rx="2"/>
+      `).join('')}
+      ${[35,75,115,195,255].map((x,i)=>`<rect x="${x}" y="${5+i%3*4}" width="8" height="8" fill="${['#FF6B9D','#FFD93D','#6BCB77','#4D96FF','#FF6B9D'][i]}" rx="2" transform="rotate(${i*20} ${x+4} ${9+i%3*4})"/>`).join('')}
+      <text x="95" y="155" font-size="11" fill="#6BCB77" font-family="Nunito,sans-serif">the squad approved!</text>
+    </svg>`
+  },
+  {
+    date:"Feb 15, 2025", title:"The Hacker Jacket 🧥",
+    desc:"He gave her his iconic jacket at lunch. Legendary move.",
+    special:"She still has it 😏", color:"#4D96FF",
+    scene:`<svg width="100%" viewBox="0 0 300 160" xmlns="http://www.w3.org/2000/svg">
+      <rect width="300" height="160" fill="#e8f0ff"/>
+      <circle cx="80" cy="52" r="20" fill="#FFDAB9"/>
+      <rect x="64" y="72" width="32" height="42" fill="#111" rx="6"/>
+      <text x="55" y="100" font-size="9" fill="#4D96FF" font-family="Nunito,sans-serif" font-weight="700">HACKER</text>
+      <text x="118" y="62" font-size="28" fill="#4D96FF" font-family="serif">→</text>
+      <circle cx="200" cy="48" r="20" fill="#FFDAB9"/>
+      <rect x="184" y="68" width="32" height="42" fill="#111" rx="6"/>
+      <text x="175" y="96" font-size="9" fill="#4D96FF" font-family="Nunito,sans-serif" font-weight="700">HACKER</text>
+      <ellipse cx="192" cy="54" rx="7" ry="4" fill="#FFB6C1"/>
+      <ellipse cx="208" cy="54" rx="7" ry="4" fill="#FFB6C1"/>
+      ${[[140,28],[155,18],[168,25]].map(([x,y])=>`<text x="${x}" y="${y}" font-size="14" font-family="serif">✨</text>`).join('')}
+      <text x="55" y="155" font-size="11" fill="#4D96FF" font-family="Nunito,sans-serif">the jacket transfer of 2025</text>
+    </svg>`
+  },
+  {
+    date:"Feb 25, 2025", title:"Birthday Celebration 🎂",
+    desc:"Cake, balloons, candles. One of them got a little wobbly.",
+    special:"Drunk disaster (iconic) 🎉", color:"#FF6B9D",
+    scene:`<svg width="100%" viewBox="0 0 300 160" xmlns="http://www.w3.org/2000/svg">
+      <rect width="300" height="160" fill="#fff0f5"/>
+      ${[['#FF6B9D',35,35],['#FFD93D',130,22],['#4D96FF',230,30]].map(([c,x,y])=>`
+        <ellipse cx="${x}" cy="${y}" rx="16" ry="20" fill="${c}"/>
+        <line x1="${x}" y1="${y+20}" x2="${x+5}" y2="${y+48}" stroke="#aaa" stroke-width="1.5"/>
+      `).join('')}
+      <rect x="88" y="92" width="80" height="30" fill="#FFD93D" rx="8"/>
+      <rect x="95" y="78" width="66" height="20" fill="#FF6B9D" rx="5"/>
+      <rect x="102" y="63" width="52" height="18" fill="#fff" rx="4"/>
+      ${[[112,62],[128,62],[144,62]].map(([x,y])=>`<rect x="${x-3}" y="${y-10}" width="6" height="12" fill="#fff"/><ellipse cx="${x}" cy="${y-10}" rx="5" ry="4" fill="#FFD93D"/>`).join('')}
+      <circle cx="215" cy="72" r="18" fill="#FFDAB9"/>
+      <rect x="202" y="90" width="26" height="32" fill="#4D96FF" rx="5"/>
+      <text x="198" y="58" font-size="16" font-family="serif">*</text>
+      <text x="225" y="55" font-size="13" font-family="serif">*</text>
+      <text x="210" y="45" font-size="14" font-family="serif">*</text>
+      <text x="75" y="152" font-size="11" fill="#FF6B9D" font-family="Nunito,sans-serif">a night to remember forever</text>
+    </svg>`
+  },
+  {
+    date:"Mar 13, 2025", title:"She Met His Mother 💐",
+    desc:"The door opened, flowers were given, and they became instant best friends.",
+    special:"Mom approved immediately!", color:"#FFD93D",
+    scene:`<svg width="100%" viewBox="0 0 300 160" xmlns="http://www.w3.org/2000/svg">
+      <rect width="300" height="160" fill="#fffbea"/>
+      <rect x="90" y="28" width="120" height="120" fill="#f0d5a0" rx="6"/>
+      <polygon points="78,28 150,5 222,28" fill="#e07050"/>
+      <rect x="106" y="70" width="88" height="78" fill="#c8a040" rx="4"/>
+      <rect x="106" y="70" width="44" height="78" fill="#d4b060" rx="2"/>
+      <circle cx="148" cy="108" r="4" fill="#FFD700"/>
+      <rect x="108" y="42" width="36" height="26" fill="#87CEEB" rx="3"/>
+      <rect x="156" y="42" width="36" height="26" fill="#87CEEB" rx="3"/>
+      <circle cx="68" cy="88" r="14" fill="#FFDAB9"/>
+      <rect x="56" y="102" width="24" height="30" fill="#6BCB77" rx="5"/>
+      <circle cx="232" cy="88" r="14" fill="#FFDAB9"/>
+      <rect x="220" y="102" width="24" height="30" fill="#FF6B9D" rx="5"/>
+      <text x="238" y="82" font-size="18" font-family="serif">🌸</text>
+      <text x="133" y="60" font-size="22" font-family="serif">❤️</text>
+      <text x="85" y="155" font-size="11" fill="#c8a000" font-family="Nunito,sans-serif">insta besties — mom & her</text>
+    </svg>`
+  },
+  {
+    date:"Mar 10, 2025", title:"Projector Airbnb 🎬",
+    desc:"Dark room, big screen, popcorn, blanket, best company.",
+    special:"Cinema goals achieved", color:"#9B59B6",
+    scene:`<svg width="100%" viewBox="0 0 300 160" xmlns="http://www.w3.org/2000/svg">
+      <rect width="300" height="160" fill="#0d0820"/>
+      <rect x="15" y="12" width="185" height="105" fill="#1a2a60" rx="8"/>
+      <rect x="20" y="17" width="175" height="95" fill="#243580" rx="5"/>
+      <text x="65" y="78" font-size="40" font-family="serif" fill="#ffffff">▶</text>
+      <polygon points="240,18 215,12 215,107 240,107" fill="#FFD93D22"/>
+      <rect x="238" y="12" width="42" height="18" fill="#555" rx="4"/>
+      <circle cx="258" cy="7" rx="10" r="10" fill="#FFD93D"/>
+      <rect x="25" y="118" width="145" height="26" fill="#3a1a60" rx="8"/>
+      <rect x="18" y="112" width="28" height="38" fill="#2a1050" rx="4"/>
+      <rect x="158" y="112" width="28" height="38" fill="#2a1050" rx="4"/>
+      <circle cx="68" cy="112" r="13" fill="#FFDAB9"/>
+      <circle cx="100" cy="112" r="13" fill="#FFDAB9"/>
+      <rect x="58" y="122" width="55" height="12" fill="#FF6B9D" rx="3"/>
+      <text x="115" y="118" font-size="16" font-family="serif">🍿</text>
+      <text x="30" y="155" font-size="11" fill="#B5D4F4" font-family="Nunito,sans-serif">the coziest night ever</text>
+    </svg>`
+  },
+  {
+    date:"Mar 30–31, 2025", title:"Bir Trip – Forest Cycling 🚴",
+    desc:"Pine forests, mountain air, bicycles through the trees. Pure magic.",
+    special:"The best cycling trail ever", color:"#6BCB77",
+    scene:`<svg width="100%" viewBox="0 0 300 160" xmlns="http://www.w3.org/2000/svg">
+      <rect width="300" height="160" fill="#d4edda"/>
+      <rect width="300" height="80" fill="#87CEEB"/>
+      <polygon points="0,80 55,30 110,65 160,20 220,55 280,35 300,50 300,80" fill="#4a7a4a"/>
+      ${[[15,80],[40,72],[72,76],[108,68],[140,72],[175,68],[210,72],[248,76],[278,80]].map(([x,y])=>`
+        <polygon points="${x},${y} ${x-14},${y+38} ${x+14},${y+38}" fill="#2d6a2d"/>
+        <rect x="${x-3}" y="${y+36}" width="6" height="18" fill="#8B4513"/>
+      `).join('')}
+      <polygon points="0,118 150,95 300,118 300,160 0,160" fill="#c8b870"/>
+      <circle cx="108" cy="108" r="11" fill="#FFDAB9"/>
+      <rect x="98" y="119" width="20" height="18" fill="#FF6B9D" rx="4"/>
+      <text x="92" y="128" font-size="18" font-family="serif">🚲</text>
+      <circle cx="170" cy="106" r="11" fill="#FFDAB9"/>
+      <rect x="160" y="117" width="20" height="18" fill="#4D96FF" rx="4"/>
+      <text x="154" y="126" font-size="18" font-family="serif">🚲</text>
+      <text x="55" y="25" font-size="11" font-family="serif">🐦</text>
+      <text x="185" y="18" font-size="11" font-family="serif">🐦</text>
+      <text x="55" y="155" font-size="11" fill="#2d6a2d" font-family="Nunito,sans-serif">cycling through the pines</text>
+    </svg>`
+  },
+  {
+    date:"May 12–13, 2025", title:"Bengali Food Day 🍛",
+    desc:"Fish curry, mishti doi, rosogolla — hearts were completely full.",
+    special:"Total food coma 😍", color:"#FF6B9D",
+    scene:`<svg width="100%" viewBox="0 0 300 160" xmlns="http://www.w3.org/2000/svg">
+      <rect width="300" height="160" fill="#fff8f0"/>
+      <rect x="20" y="100" width="260" height="10" fill="#c8a870" rx="3"/>
+      <rect x="20" y="110" width="260" height="6" fill="#b8987a"/>
+      <rect x="22" y="60" width="72" height="42" fill="#e8834a" rx="8"/>
+      <text x="30" y="82" font-size="10" fill="#fff" font-family="Nunito,sans-serif" font-weight="700">Fish Curry</text>
+      <rect x="110" y="65" width="60" height="36" fill="#f5d3a0" rx="8"/>
+      <text x="120" y="87" font-size="10" fill="#c8860a" font-family="Nunito,sans-serif" font-weight="700">Mishti Doi</text>
+      <rect x="188" y="62" width="88" height="40" fill="#fff5f5" rx="8" stroke="#FF6B9D" stroke-width="1.5"/>
+      <text x="198" y="85" font-size="10" fill="#FF6B9D" font-family="Nunito,sans-serif" font-weight="700">Roshogolla</text>
+      ${[[50,58],[132,63],[218,60]].map(([x,y])=>`<text x="${x}" y="${y}" font-size="12" fill="#aaa" font-family="serif">〰</text>`).join('')}
+      <circle cx="82" cy="38" r="15" fill="#FFDAB9"/>
+      <text x="72" y="43" font-size="15" font-family="serif">😍</text>
+      <circle cx="192" cy="36" r="15" fill="#FFDAB9"/>
+      <text x="182" y="41" font-size="15" font-family="serif">😍</text>
+      <text x="80" y="155" font-size="11" fill="#FF6B9D" font-family="Nunito,sans-serif">happiest food coma ever</text>
+    </svg>`
+  },
+  {
+    date:"Jun 26–28, 2025", title:"5 Month Celebration 🏮",
+    desc:"Delhi Haat momos, swinging lanterns, and a Mount Fuji dinner.",
+    special:"5 months strong! 🥟", color:"#4D96FF",
+    scene:`<svg width="100%" viewBox="0 0 300 160" xmlns="http://www.w3.org/2000/svg">
+      <rect width="300" height="160" fill="#eef5ff"/>
+      ${[['#FF6B9D',32],[['#FFD93D'],92],['#4D96FF',155],['#6BCB77',218]].map(([c,x])=>`
+        <ellipse cx="${x}" cy="${20}" rx="12" ry="16" fill="${Array.isArray(c)?c[0]:c}"/>
+        <rect x="${x-1}" y="${3}" width="2" height="7" fill="#c8a870"/>
+        <line x1="${x}" y1="${36}" x2="${x}" y2="${52}" stroke="#c8a870" stroke-width="1.2"/>
+      `).join('')}
+      <polygon points="155,120 180,70 205,120" fill="#8a9aaa"/>
+      <polygon points="168,83 180,70 192,83" fill="#eef2f5"/>
+      <text x="28" y="95" font-size="22" font-family="serif">🥟</text>
+      <text x="58" y="98" font-size="22" font-family="serif">🥟</text>
+      <circle cx="88" cy="105" r="15" fill="#FFDAB9"/>
+      <rect x="77" y="120" width="22" height="28" fill="#FF6B9D" rx="5"/>
+      <circle cx="118" cy="105" r="15" fill="#FFDAB9"/>
+      <rect x="107" y="120" width="22" height="28" fill="#4D96FF" rx="5"/>
+      ${[['#FF6B9D',22,148],['#FFD93D',38,148],['#6BCB77',54,148]].map(([c,x,y])=>`<circle cx="${x}" cy="${y}" r="5" fill="${c}"/>`).join('')}
+      <text x="120" y="155" font-size="12" fill="#4D96FF" font-family="Nunito,sans-serif" font-weight="700">5 months strong!</text>
+    </svg>`
+  },
+  {
+    date:"Jul 27, 2025", title:"6 Month – Chole Bhature 🥣",
+    desc:"Six months needed the most iconic Delhi street food celebration.",
+    special:"Bhature puffed like a balloon", color:"#FFD93D",
+    scene:`<svg width="100%" viewBox="0 0 300 160" xmlns="http://www.w3.org/2000/svg">
+      <rect width="300" height="160" fill="#fffaee"/>
+      <ellipse cx="148" cy="105" rx="90" ry="22" fill="#e8c898"/>
+      <ellipse cx="148" cy="100" rx="80" ry="18" fill="#fff5e0"/>
+      <ellipse cx="118" cy="92" rx="48" ry="30" fill="#FFD93D"/>
+      <ellipse cx="118" cy="88" rx="40" ry="24" fill="#f5c518"/>
+      <ellipse cx="200" cy="96" rx="32" ry="16" fill="#c8a870" rx="5"/>
+      <rect x="170" y="85" width="60" height="12" fill="#8B4513" rx="3"/>
+      <text x="182" y="96" font-size="10" fill="#fff5e0" font-family="Nunito,sans-serif" font-weight="700">Chole</text>
+      <text x="100" y="55" font-size="13" fill="#aaa" font-family="serif">〰〰〰</text>
+      <circle cx="50" cy="75" r="16" fill="#FFDAB9"/>
+      <text x="38" y="80" font-size="16" font-family="serif">😋</text>
+      <rect x="37" y="91" width="26" height="32" fill="#FF6B9D" rx="5"/>
+      <circle cx="238" cy="72" r="16" fill="#FFDAB9"/>
+      <text x="226" y="77" font-size="16" font-family="serif">😋</text>
+      <rect x="225" y="88" width="26" height="32" fill="#4D96FF" rx="5"/>
+      <rect x="96" y="8" width="68" height="22" fill="#FFD93D" rx="11"/>
+      <text x="105" y="23" font-size="11" fill="#7a5000" font-family="Nunito,sans-serif" font-weight="700">6 MONTHS!</text>
+      <text x="45" y="155" font-size="11" fill="#c8a000" font-family="Nunito,sans-serif">bhature bigger than our smiles? nope</text>
+    </svg>`
+  },
+  {
+    date:"Aug 22–24, 2025", title:"Campus + Midnight Photography 📷",
+    desc:"Campus by day, secret street photographers by midnight.",
+    special:"Midnight photography challenge ⚡", color:"#6BCB77",
+    scene:`<svg width="100%" viewBox="0 0 300 160" xmlns="http://www.w3.org/2000/svg">
+      <rect width="300" height="160" fill="#06081a"/>
+      ${[['#FF6B9D',18,118],['#FFD93D',55,125],['#4D96FF',98,112],['#6BCB77',145,120],['#FF6B9D',195,115],['#FFD93D',248,122]].map(([c,x,y])=>`
+        <ellipse cx="${x}" cy="${y}" rx="18" ry="10" fill="${c}33"/>
+        <circle cx="${x}" cy="${y}" r="3.5" fill="${c}"/>
+      `).join('')}
+      ${[[8,38,32,88],[48,25,28,110],[85,40,24,88],[118,12,42,115],[162,28,35,100],[205,22,32,108],[248,40,24,85]].map(([x,y,w,h])=>`<rect x="${x}" y="${y}" width="${w}" height="${h}" fill="#141830"/>`).join('')}
+      ${[[12,42],[16,52],[52,30],[56,42],[90,48],[122,18],[125,30],[168,32],[210,28],[252,45]].map(([x,y])=>`<rect x="${x}" y="${y}" width="6" height="5" fill="#FFD93D"/>`).join('')}
+      <circle cx="148" cy="32" rx="22" r="22" fill="#ffffff18"/>
+      <circle cx="148" cy="32" r="18" fill="#12143a"/>
+      <text x="140" y="36" font-size="11" fill="#fff" font-family="Nunito,sans-serif" font-weight="700">12</text>
+      <line x1="148" y1="32" x2="148" y2="18" stroke="#fff" stroke-width="2"/>
+      <line x1="148" y1="32" x2="158" y2="32" stroke="#fff" stroke-width="1.5"/>
+      <circle cx="85" cy="98" r="12" fill="#FFDAB9"/><rect x="75" y="110" width="20" height="22" fill="#4D96FF" rx="4"/>
+      <circle cx="115" cy="98" r="12" fill="#FFDAB9"/><rect x="105" y="110" width="20" height="22" fill="#FF6B9D" rx="4"/>
+      <text x="120" y="90" font-size="15" font-family="serif">📷</text>
+      <text x="133" y="80" font-size="13" font-family="serif">⚡</text>
+      <text x="38" y="155" font-size="11" fill="#6BCB77" font-family="Nunito,sans-serif">midnight memory makers</text>
+    </svg>`
+  },
+  {
+    date:"Dec 3, 2025", title:"First Visit to His Home 🏠",
+    desc:"She stepped through the door for the first time. The warmest welcome.",
+    special:"Welcome home ♡", color:"#FF6B9D",
+    scene:`<svg width="100%" viewBox="0 0 300 160" xmlns="http://www.w3.org/2000/svg">
+      <rect width="300" height="160" fill="#fff5f8"/>
+      <rect x="55" y="42" width="155" height="108" fill="#f0d5b0" rx="6"/>
+      <polygon points="42,42 132,12 218,42" fill="#e07050"/>
+      <rect x="108" y="80" width="55" height="70" fill="#c8a870" rx="4"/>
+      <rect x="108" y="80" width="27" height="70" fill="#d4b080" rx="2"/>
+      <circle cx="158" cy="115" r="4" fill="#FFD700"/>
+      <rect x="65" y="56" width="38" height="28" fill="#87CEEB" rx="4"/>
+      <rect x="162" y="56" width="38" height="28" fill="#87CEEB" rx="4"/>
+      <rect x="112" y="82" width="51" height="38" fill="#FFD93D44"/>
+      <text x="55" y="142" font-size="18" font-family="serif">🪴</text>
+      <circle cx="228" cy="92" r="16" fill="#FFDAB9"/>
+      <rect x="215" y="108" width="26" height="32" fill="#FF6B9D" rx="5"/>
+      <text x="228" y="84" font-size="16" font-family="serif">🎀</text>
+      <text x="82" y="157" font-size="11" fill="#FF6B9D" font-family="Nunito,sans-serif">she finally saw his world</text>
+    </svg>`
+  },
+  {
+    date:"Dec 24–25, 2025", title:"11 Month Celebration 🌸",
+    desc:"Bouquets, floating polaroids, and almost a full year together.",
+    special:"Flowers & photos forever", color:"#4D96FF",
+    scene:`<svg width="100%" viewBox="0 0 300 160" xmlns="http://www.w3.org/2000/svg">
+      <rect width="300" height="160" fill="#f0f5ff"/>
+      ${[[8,8,8],[72,5,-6],[140,10,5],[210,6,-9]].map(([x,y,rot])=>`
+        <g transform="rotate(${rot} ${x+24} ${y+28})">
+          <rect x="${x}" y="${y}" width="48" height="56" fill="#fff" rx="4" stroke="#e0e8ff" stroke-width="1.5"/>
+          <rect x="${x+4}" y="${y+4}" width="40" height="36" fill="#d8e8ff" rx="2"/>
+          <rect x="${x+10}" y="${y+44}" width="28" height="7" fill="#f0f0f0" rx="2"/>
+        </g>
+      `).join('')}
+      <text x="60" y="108" font-size="26" font-family="serif">🌸🌼🌷</text>
+      <circle cx="105" cy="122" r="15" fill="#FFDAB9"/>
+      <rect x="93" y="137" width="24" height="20" fill="#FF6B9D" rx="5"/>
+      <circle cx="148" cy="122" r="15" fill="#FFDAB9"/>
+      <rect x="136" y="137" width="24" height="20" fill="#4D96FF" rx="5"/>
+      ${[['#FF6B9D',118,105],['#FFD93D',132,98],['#4D96FF',146,105]].map(([c,x,y])=>`<text x="${x}" y="${y}" font-size="16" fill="${c}" font-family="serif">♥</text>`).join('')}
+      <text x="40" y="158" font-size="11" fill="#4D96FF" font-family="Nunito,sans-serif">11 months of infinite moments</text>
+    </svg>`
+  },
+  {
+    date:"Jan 24, 2026", title:"ONE WHOLE YEAR! 🎉",
+    desc:"365 days. A new iPhone. And a love that only gets better.",
+    special:"1 year ✓  New iPhone ✓  Forever ✓", color:"#FF6B9D",
+    scene:`<svg width="100%" viewBox="0 0 300 160" xmlns="http://www.w3.org/2000/svg">
+      <rect width="300" height="160" fill="#fff0f8"/>
+      ${[['#FF6B9D',22,22],['#FFD93D',75,12],['#4D96FF',138,18],['#6BCB77',195,25],['#FF6B9D',252,15],
+         ['#FF6B9D',15,60],['#FFD93D',280,45],['#4D96FF',45,110],['#6BCB77',265,100]].map(([c,x,y])=>`
+        <circle cx="${x}" cy="${y}" r="6" fill="${c}"/>
+        <rect x="${x+10}" y="${y}" width="9" height="9" fill="${c}" rx="2"/>
+      `).join('')}
+      <text x="38" y="62" font-family="Pacifico,cursive" font-size="32" fill="#FF6B9D">1 YEAR</text>
+      <text x="38" y="88" font-size="16" fill="#FFD93D" font-family="Nunito,sans-serif" font-weight="700">of pure magic ✨</text>
+      <rect x="185" y="25" width="40" height="68" fill="#111" rx="8"/>
+      <rect x="189" y="30" width="32" height="56" fill="#87CEEB" rx="5"/>
+      <circle cx="205" cy="91" r="4" fill="#555"/>
+      <circle cx="58" cy="112" r="16" fill="#FFDAB9"/>
+      <rect x="44" y="128" width="28" height="25" fill="#FF6B9D" rx="5"/>
+      <circle cx="100" cy="108" r="16" fill="#FFDAB9"/>
+      <rect x="86" y="124" width="28" height="25" fill="#4D96FF" rx="5"/>
+      <text x="108" y="100" font-size="18" font-family="serif">✨✨</text>
+      <text x="28" y="155" font-size="11" fill="#FF6B9D" font-family="Nunito,sans-serif" font-weight="700">here's to forever, Apoorv & Anugya 💕</text>
+    </svg>`
+  }
+];
+
+function buildTimeline() {
+  const container = document.getElementById('events-container');
+
+  events.forEach((ev, i) => {
+    const div = document.createElement('div');
+    div.className = 'event visible'; // always visible — no IntersectionObserver needed
+    div.style.transitionDelay = `${i * 0.08}s`;
+
+    const card = `
+      <div class="card">
+        <div class="card-scene">${ev.scene}</div>
+        <div class="card-body">
+          <div class="card-date">${ev.date}</div>
+          <div class="card-title">${ev.title}</div>
+          <div class="card-desc">${ev.desc}</div>
+          ${ev.special ? `<div class="card-special" style="background:${ev.color}22;color:${ev.color}">${ev.special}</div>` : ''}
+        </div>
+      </div>`;
+
+    const mid = `<div class="event-mid"><div class="event-node" style="background:${ev.color};box-shadow:0 0 0 4px ${ev.color}44"></div></div>`;
+    if (i % 2 === 0) {
+      div.innerHTML = `<div class="event-left">${card}</div>${mid}<div class="event-right"></div>`;
+    } else {
+      div.innerHTML = `<div class="event-left"></div>${mid}<div class="event-right">${card}</div>`;
+    }
+
+    container.appendChild(div);
+  });
+
+  // Animate in with staggered delay using requestAnimationFrame
+  const cards = document.querySelectorAll('.event');
+  cards.forEach((card, i) => {
+    card.style.opacity = '0';
+    card.style.transform = 'translateY(30px)';
+    setTimeout(() => {
+      card.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
+      card.style.opacity = '1';
+      card.style.transform = 'translateY(0)';
+    }, 100 + i * 120);
+  });
+}
+
+// Confetti
+function spawnConfetti() {
+  const wrap = document.getElementById('confetti');
+  const colors = ['#FF6B9D','#FFD93D','#6BCB77','#4D96FF','#9B59B6'];
+  for (let i = 0; i < 20; i++) {
+    const el = document.createElement('div');
+    el.className = 'cp';
+    el.style.cssText = `
+      left:${Math.random()*100}%;
+      background:${colors[Math.floor(Math.random()*colors.length)]};
+      animation-duration:${4+Math.random()*6}s;
+      animation-delay:${Math.random()*8}s;
+      width:${5+Math.random()*6}px;
+      height:${5+Math.random()*6}px;
+      border-radius:${Math.random()>.5?'50%':'2px'};
+    `;
+    wrap.appendChild(el);
+  }
+}
+
+buildTimeline();
+spawnConfetti();
+</script>
+</body>
+</html>
